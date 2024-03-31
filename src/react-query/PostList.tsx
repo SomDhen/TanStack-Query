@@ -14,10 +14,16 @@ const PostList = () => {
       .get<Post[]>("https://jsonplaceholder.typicode.com/posts")
       .then((res) => res.data);
 
-  const { data: posts, error } = useQuery<Post[], Error>({
+  const {
+    data: posts,
+    error,
+    isLoading,
+  } = useQuery<Post[], Error>({
     queryKey: ["posts"],
     queryFn: fetchPost,
   });
+
+  if (isLoading) return <p className="text-danger">Loading...</p>;
 
   if (error) return <p className="text-danger">{error.message}</p>;
 
