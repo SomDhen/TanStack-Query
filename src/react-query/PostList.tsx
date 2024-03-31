@@ -14,12 +14,12 @@ const PostList = () => {
       .get<Post[]>("https://jsonplaceholder.typicode.com/posts")
       .then((res) => res.data);
 
-  const { data: posts } = useQuery({
+  const { data: posts, error } = useQuery<Post[], Error>({
     queryKey: ["posts"],
     queryFn: fetchPost,
   });
 
-  // if (error) return <p>{error}</p>;
+  if (error) return <p className="text-danger">{error.message}</p>;
 
   return (
     <ul className="list-group">
