@@ -1,27 +1,7 @@
-import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
-
-interface Post {
-  id: number;
-  title: string;
-  body: string;
-  userId: number;
-}
+import usePosts from "./hooks/usePosts";
 
 const PostList = () => {
-  const fetchPost = () =>
-    axios
-      .get<Post[]>("https://jsonplaceholder.typicode.com/posts")
-      .then((res) => res.data);
-
-  const {
-    data: posts,
-    error,
-    isLoading,
-  } = useQuery<Post[], Error>({
-    queryKey: ["posts"],
-    queryFn: fetchPost,
-  });
+  const { data: posts, error, isLoading } = usePosts();
 
   if (isLoading) return <p className="text-danger">Loading...</p>;
 
